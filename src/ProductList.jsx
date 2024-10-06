@@ -1,15 +1,10 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
-import {addItem} from './CartSlice';
-import { useDispatch, useSelector } from 'react-redux';
-
 function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-    const [addedToCart, setAddedToCart] = useState({});
-    // Retrieve the cart items from the Redux store
-    const cartItems = useSelector(state => state.cart.items);
+
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -237,39 +232,20 @@ function ProductList() {
     fontSize: '30px',
     textDecoration: 'none',
    }
-   const dispatch = useDispatch(); // Initialize dispatch from Redux
    const handleCartClick = (e) => {
     e.preventDefault();
     setShowCart(true); // Set showCart to true when cart icon is clicked
-    };
-    const handlePlantsClick = (e) => {
-        e.preventDefault();
-        setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
-        setShowCart(false); // Hide the cart when navigating to About Us
-    };
+};
+const handlePlantsClick = (e) => {
+    e.preventDefault();
+    setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
+    setShowCart(false); // Hide the cart when navigating to About Us
+};
 
    const handleContinueShopping = (e) => {
     e.preventDefault();
-    setShowPlants(true);
     setShowCart(false);
   };
-
-  const handleAddToCart = (product) => {
-  // Check if the item already exists in the cart
-  const existingItem = cartItems.find(item => item.name === product.name);
-  if (existingItem) {
-    // If it exists, increase the quantity
-    dispatch(addItem({ ...existingItem, quantity: existingItem.quantity + 1 }));
-  } else {
-    // Otherwise, add the new item to the cart
-    dispatch(addItem({ ...product, quantity: 1 }));
-  }
-  setAddedToCart((prevState) => ({
-     ...prevState,
-     [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
-   }));
-};
-
     return (
         <div>
              <div className="navbar" style={styleObj}>
@@ -292,22 +268,8 @@ function ProductList() {
         </div>
         {!showCart? (
         <div className="product-grid">
-            {plantsArray.map((category, index) => (
-                <div key={index}>
-                    <h1><div>{category.category}</div></h1>
-                    <div className="product-list">
-                        {category.plants.map((plant, plantIndex) => (
-                        <div className="product-card" key={plantIndex}>
-                            <img className="product-image" src={plant.image} alt={plant.name} />
-                            <div className="product-title">{plant.name}</div>
-                            <div>{plant.cost}</div>
-                            {/*Similarly like the above plant.name show other details like description and cost*/}
-                            <button  className="product-button" onClick={() => handleAddToCart(plant)}>{addedToCart[plant.name] ? 'Added to Cart' : 'Add to Cart'}</button>
-                        </div>
-                        ))}
-                    </div>
-                </div>
-            ))}
+
+
         </div>
  ) :  (
     <CartItem onContinueShopping={handleContinueShopping}/>
