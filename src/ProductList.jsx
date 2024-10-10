@@ -256,30 +256,6 @@ function ProductList() {
     console.log("showCart value :",showCart);
   };
 
-//   const handleAddToCart = (product) => {
-//   // Check if the item already exists in the cart
-//   const existingItem = cartItems.find(item => item.name === product.name);
-//   if (existingItem) {
-//     // If it exists, increase the quantity
-//     dispatch(addItem({ ...existingItem, quantity: existingItem.quantity + 1 }));
-//   } else {
-//     // Otherwise, add the new item to the cart
-//     dispatch(addItem({ ...product, quantity: 1 }));
-//   }
-//   setAddedToCart((prevState) => ({
-//      ...prevState,
-//      [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
-//    }));
-
-
-//     const handleAddToCart = (product) => {
-//     dispatch(addItem(product));
-//     setAddedToCart((prevState) => ({
-//        ...prevState,
-//        [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
-//      }));
-//   };
-
     // Dispatch the addItem action to add items to the cart
     const handleAddToCart = (product) => {
         dispatch(addItem({ ...product, quantity: 1 })); // Adding a quantity of 1 when adding to cart
